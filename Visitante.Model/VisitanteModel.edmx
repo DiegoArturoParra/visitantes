@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="VisitanteModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\DIMAR\codigo\visitantes1.0_sqlite\Visitantes\Visitante.Api\BaseDatos\visitantesdb.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Instalacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RegistroVisitante">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdInstalacion" Type="integer" Nullable="false" />
+          <Property Name="IdVisitante" Type="integer" Nullable="false" />
+          <Property Name="FechaIngreso" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="FechaSalida" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Observaciones" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="TipoIdentificacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Siglas" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Visitante">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipoIdentificacion" Type="integer" Nullable="false" />
+          <Property Name="Identificacion" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Nombres" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Apellidos" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="FechaCreacion" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_RegistroVisitante_0_0">
+          <End Role="Visitante" Type="Self.Visitante" Multiplicity="1" />
+          <End Role="RegistroVisitante" Type="Self.RegistroVisitante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visitante">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RegistroVisitante">
+              <PropertyRef Name="IdVisitante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegistroVisitante_1_0">
+          <End Role="Instalacion" Type="Self.Instalacion" Multiplicity="1" />
+          <End Role="RegistroVisitante" Type="Self.RegistroVisitante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instalacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RegistroVisitante">
+              <PropertyRef Name="IdInstalacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visitante_0_0">
+          <End Role="TipoIdentificacion" Type="Self.TipoIdentificacion" Multiplicity="1" />
+          <End Role="Visitante" Type="Self.Visitante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoIdentificacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Visitante">
+              <PropertyRef Name="TipoIdentificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VisitanteModelStoreContainer">
+          <EntitySet Name="Instalacion" EntityType="Self.Instalacion" store:Type="Tables" />
+          <EntitySet Name="RegistroVisitante" EntityType="Self.RegistroVisitante" store:Type="Tables" />
+          <EntitySet Name="TipoIdentificacion" EntityType="Self.TipoIdentificacion" store:Type="Tables" />
+          <EntitySet Name="Visitante" EntityType="Self.Visitante" store:Type="Tables" />
+          <AssociationSet Name="FK_RegistroVisitante_0_0" Association="Self.FK_RegistroVisitante_0_0">
+            <End Role="Visitante" EntitySet="Visitante" />
+            <End Role="RegistroVisitante" EntitySet="RegistroVisitante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegistroVisitante_1_0" Association="Self.FK_RegistroVisitante_1_0">
+            <End Role="Instalacion" EntitySet="Instalacion" />
+            <End Role="RegistroVisitante" EntitySet="RegistroVisitante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visitante_0_0" Association="Self.FK_Visitante_0_0">
+            <End Role="TipoIdentificacion" EntitySet="TipoIdentificacion" />
+            <End Role="Visitante" EntitySet="Visitante" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VisitanteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Instalacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="RegistroVisitante" Relationship="Self.FK_RegistroVisitante_1_0" FromRole="Instalacion" ToRole="RegistroVisitante" />
+        </EntityType>
+        <EntityType Name="RegistroVisitante">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdInstalacion" Type="Int64" Nullable="false" />
+          <Property Name="IdVisitante" Type="Int64" Nullable="false" />
+          <Property Name="FechaIngreso" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaSalida" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Observaciones" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Instalacion" Relationship="Self.FK_RegistroVisitante_1_0" FromRole="RegistroVisitante" ToRole="Instalacion" />
+          <NavigationProperty Name="Visitante" Relationship="Self.FK_RegistroVisitante_0_0" FromRole="RegistroVisitante" ToRole="Visitante" />
+        </EntityType>
+        <EntityType Name="TipoIdentificacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Siglas" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Visitante" Relationship="Self.FK_Visitante_0_0" FromRole="TipoIdentificacion" ToRole="Visitante" />
+        </EntityType>
+        <EntityType Name="Visitante">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoIdentificacion" Type="Int64" Nullable="false" />
+          <Property Name="Identificacion" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nombres" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaCreacion" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="RegistroVisitante" Relationship="Self.FK_RegistroVisitante_0_0" FromRole="Visitante" ToRole="RegistroVisitante" />
+          <NavigationProperty Name="TipoIdentificacion1" Relationship="Self.FK_Visitante_0_0" FromRole="Visitante" ToRole="TipoIdentificacion" />
+        </EntityType>
+        <Association Name="FK_RegistroVisitante_1_0">
+          <End Role="Instalacion" Type="Self.Instalacion" Multiplicity="1" />
+          <End Role="RegistroVisitante" Type="Self.RegistroVisitante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instalacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RegistroVisitante">
+              <PropertyRef Name="IdInstalacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegistroVisitante_0_0">
+          <End Role="Visitante" Type="Self.Visitante" Multiplicity="1" />
+          <End Role="RegistroVisitante" Type="Self.RegistroVisitante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visitante">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RegistroVisitante">
+              <PropertyRef Name="IdVisitante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visitante_0_0">
+          <End Role="TipoIdentificacion" Type="Self.TipoIdentificacion" Multiplicity="1" />
+          <End Role="Visitante" Type="Self.Visitante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoIdentificacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Visitante">
+              <PropertyRef Name="TipoIdentificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VisitanteEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Instalacion" EntityType="Self.Instalacion" />
+          <EntitySet Name="RegistroVisitante" EntityType="Self.RegistroVisitante" />
+          <EntitySet Name="TipoIdentificacion" EntityType="Self.TipoIdentificacion" />
+          <EntitySet Name="Visitante" EntityType="Self.Visitante" />
+          <AssociationSet Name="FK_RegistroVisitante_1_0" Association="Self.FK_RegistroVisitante_1_0">
+            <End Role="Instalacion" EntitySet="Instalacion" />
+            <End Role="RegistroVisitante" EntitySet="RegistroVisitante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegistroVisitante_0_0" Association="Self.FK_RegistroVisitante_0_0">
+            <End Role="Visitante" EntitySet="Visitante" />
+            <End Role="RegistroVisitante" EntitySet="RegistroVisitante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visitante_0_0" Association="Self.FK_Visitante_0_0">
+            <End Role="TipoIdentificacion" EntitySet="TipoIdentificacion" />
+            <End Role="Visitante" EntitySet="Visitante" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VisitanteModelStoreContainer" CdmEntityContainer="VisitanteEntities">
+          <EntitySetMapping Name="Instalacion">
+            <EntityTypeMapping TypeName="VisitanteModel.Instalacion">
+              <MappingFragment StoreEntitySet="Instalacion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegistroVisitante">
+            <EntityTypeMapping TypeName="VisitanteModel.RegistroVisitante">
+              <MappingFragment StoreEntitySet="RegistroVisitante">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdInstalacion" ColumnName="IdInstalacion" />
+                <ScalarProperty Name="IdVisitante" ColumnName="IdVisitante" />
+                <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
+                <ScalarProperty Name="FechaSalida" ColumnName="FechaSalida" />
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoIdentificacion">
+            <EntityTypeMapping TypeName="VisitanteModel.TipoIdentificacion">
+              <MappingFragment StoreEntitySet="TipoIdentificacion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Siglas" ColumnName="Siglas" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visitante">
+            <EntityTypeMapping TypeName="VisitanteModel.Visitante">
+              <MappingFragment StoreEntitySet="Visitante">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TipoIdentificacion" ColumnName="TipoIdentificacion" />
+                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

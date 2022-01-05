@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="73c7724ca7c04f1789852d680c344eec" Name="Diagram1">
+        <EntityTypeShape EntityType="VisitanteModel.Instalacion" Width="2" PointX="0.75" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VisitanteModel.RegistroVisitante" Width="1.875" PointX="6.375" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VisitanteModel.TipoIdentificacion" Width="1.875" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VisitanteModel.Visitante" Width="1.5" PointX="3.75" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="VisitanteModel.FK_RegistroVisitante_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="VisitanteModel.FK_RegistroVisitante_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="VisitanteModel.FK_Visitante_0_0" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
