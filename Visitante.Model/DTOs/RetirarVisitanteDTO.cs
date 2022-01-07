@@ -7,7 +7,7 @@ namespace Visitante.Model.DTOs
 {
     public class RetirarVisitanteDTO
     {
-        public int IdRegistro { get; set; }
-        public string FechaSalida => DateTime.Now.ToString();
+        public long IdRegistro { get; set; }
+        public string FechaSalida => DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
     }
 }

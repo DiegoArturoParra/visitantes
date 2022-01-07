@@ -1,16 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Visitante.Model;
 
 namespace Visitante.Repositories
 {
     public class TipoIdentificacionRepository
     {
+        ConnectionStringSettings c = ConfigurationManager.ConnectionStrings["VisitanteEntities"];
+        VisitanteEntities contexto;
 
-        VisitanteEntities contexto = new VisitanteEntities();
+
+        public TipoIdentificacionRepository()
+        {
+            string fixedConnectionString = c.ConnectionString.Replace("{appDomain}", AppDomain.CurrentDomain.BaseDirectory);
+
+            contexto = new VisitanteEntities(fixedConnectionString);
+        }
+
 
         /// <summary>
         /// Retorna el listado de tipos de identificación

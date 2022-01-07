@@ -1,18 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Visitante.Model;
+using Visitante.Model.DTOs;
 
 namespace Visitante.Repositories
 {
     public class VisitanteRepository
     {
-
-        VisitanteEntities contexto = new VisitanteEntities();
-
+        ConnectionStringSettings c = ConfigurationManager.ConnectionStrings["VisitanteEntities"];
+        VisitanteEntities contexto;
+        public VisitanteRepository()
+        {
+            string fixedConnectionString = c.ConnectionString.Replace("{appDomain}", AppDomain.CurrentDomain.BaseDirectory);
+            contexto = new VisitanteEntities(fixedConnectionString);
+        }
         /// <summary>
         /// Retorna la información de un visitante dado su Id
         /// </summary>
@@ -93,13 +99,25 @@ namespace Visitante.Repositories
         /// Retorna la lista de visitantes ordenada descendente por fecha de creación
         /// </summary>
         /// <returns></returns>
-        public List<Visitante.Model.Visitante> GetVisitantes()
+        public List<ListVisitanteDTO> GetVisitantes()
         {
-            this.contexto.Configuration.LazyLoadingEnabled = true;
+         
             var visitantes = contexto.Visitante.OrderByDescending(x => x.FechaCreacion).ToList();
             // var visitantes = contexto.Visitante.ToList();
             // visitantes = visitantes.OrderByDescending(x => x.FechaCreacionData).ToList();
-            return visitantes;
+             
+            var listado = visitantes.Select(x => new ListVisitanteDTO
+            {
+                TipoIdentificacion = new TipoIdentificacionDTO
+                {
+                    Nombre = x.TipoIdentificacion1.Nombre,
+                    Siglas = x.TipoIdentificacion1.Siglas
+                },
+                Id = x.Id,
+                Nombres = x.Nombres,
+                Apellidos = x.Apellidos
+            }).ToList();
+            return listado;
         }
 
 

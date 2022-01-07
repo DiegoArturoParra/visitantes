@@ -38,17 +38,19 @@ namespace Visitante.Business
         {
             try
             {
+                var fechaActual = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 Visitante.Model.Visitante registro = new Model.Visitante()
                 {
                     Apellidos = visitanteNuevo.Apellidos,
-                    FechaCreacion = visitanteNuevo.FechaCreacion,
+                    FechaCreacion = fechaActual,
                     Identificacion = visitanteNuevo.Identificacion,
                     Nombres = visitanteNuevo.Nombres,
                     TipoIdentificacion = visitanteNuevo.TipoIdentificacionId
                 };
                 var visitante = (new VisitanteRepository()).GetByIdentificacion(visitanteNuevo.Identificacion);
 
-                if (visitante != null) {
+                if (visitante != null)
+                {
                     throw new Exception("El visitante ya se encuentra registrado en el sistema.");
                 }
                 var resultado = (new VisitanteRepository()).CrearVisitante(registro);
@@ -93,7 +95,7 @@ namespace Visitante.Business
         /// Retorna la lista de visitantes
         /// </summary>
         /// <returns></returns>
-        public List<Visitante.Model.Visitante> GetVisitantes()
+        public List<ListVisitanteDTO> GetVisitantes()
         {
             return (new VisitanteRepository()).GetVisitantes();
         }

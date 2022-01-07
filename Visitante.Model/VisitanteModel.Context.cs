@@ -9,22 +9,21 @@
 
 namespace Visitante.Model
 {
-    using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+
     public partial class VisitanteEntities : DbContext
     {
-        public VisitanteEntities()
-            : base("name=VisitanteEntities")
+
+        public VisitanteEntities(string connection): base(connection)
         {
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
         public virtual DbSet<Instalacion> Instalacion { get; set; }
         public virtual DbSet<RegistroVisitante> RegistroVisitante { get; set; }
         public virtual DbSet<TipoIdentificacion> TipoIdentificacion { get; set; }

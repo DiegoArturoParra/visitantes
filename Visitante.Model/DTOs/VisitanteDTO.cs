@@ -12,7 +12,23 @@ namespace Visitante.Model.DTOs
         public string Identificacion { get; set; }
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
-        public string FechaCreacion => DateTime.ParseExact(DateTime.Now.ToString(), "yyyy-MM-dd HH:mm:ss", null)
-                    .ToString("dd-MM-yyyy HH:mm:ss");
+        public TipoIdentificacionDTO TipoIdentificacion { get; set; }
+    }
+
+    public class InstalacionDTO
+    {
+        public string Nombre { get; set; }
+    }
+    public class ListVisitanteDTO
+    {
+        public long Id { get; set; }
+        public string Nombres { get; set; }
+        public string Apellidos { get; set; }
+        public TipoIdentificacionDTO TipoIdentificacion { get; set; }
+    }
+    public class TipoIdentificacionDTO
+    {
+        public string Siglas { get; set; }
+        public string Nombre { get; set; }
     }
 }

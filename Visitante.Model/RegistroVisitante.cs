@@ -20,7 +20,6 @@ namespace Visitante.Model
         public string FechaIngreso { get; set; }
         public string FechaSalida { get; set; }
         public string Observaciones { get; set; }
-    
         public virtual Instalacion Instalacion { get; set; }
         public virtual Visitante Visitante { get; set; }
     }

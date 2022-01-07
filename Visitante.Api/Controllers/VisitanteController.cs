@@ -29,21 +29,7 @@ namespace Visitante.Api.Controllers
             try
             {
                 var lista = new VisitanteBO().GetVisitantes();
-                if (lista == null)
-                {
-                    lista = new List<Visitante.Model.Visitante>();
-                }
-                var resultado = (from r in lista
-                                 select new
-                                 {
-                                     r.Id,
-                                     r.Nombres,
-                                     r.Apellidos,
-                                     r.FechaCreacion,
-                                     r.FechaCreacionData
-                                 }).ToList();
-
-                return Ok(resultado);
+                return Ok(lista);
             }
             catch (Exception ex)
             {
@@ -75,7 +61,30 @@ namespace Visitante.Api.Controllers
                 return ResponseMessage(httpResponseMessage);
             }
         }
-
+        [HttpGet]
+        [Route("listado-by-nombre")]
+        [AllowAnonymous]
+        public IHttpActionResult GetRegistrosByNombreVisitante(string nombreVisitante)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(nombreVisitante))
+                {
+                    return GetRegistros();
+                }
+                var lista = new RegistroVisitanteBO().GetRegistrosByNombreVisitante(nombreVisitante);
+                return Ok(lista);
+            }
+            catch (Exception ex)
+            {
+                var error = $"Error al manejar la solicitud. Error: {ex.Message}";
+                var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent(error, System.Text.Encoding.UTF8, "text/plain")
+                };
+                return ResponseMessage(httpResponseMessage);
+            }
+        }
 
         [HttpPost]
         [Route("crear")]
@@ -99,7 +108,7 @@ namespace Visitante.Api.Controllers
             }
         }
         [HttpPut]
-        [Route("retirar-visitante-instalacion")]
+        [Route("retirar-visitante-de-instalacion")]
         [AllowAnonymous]
         public IHttpActionResult retirarVisitante(RetirarVisitanteDTO visitante)
         {

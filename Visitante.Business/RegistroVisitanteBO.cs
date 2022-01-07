@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Visitante.Model;
 using Visitante.Model.DTOs;
 using Visitante.Repositories;
@@ -19,13 +20,14 @@ namespace Visitante.Business
             string mensaje = string.Empty;
             try
             {
+                DateTime fecha = DateTime.Parse(visitante.FechaIngreso);
                 RegistroVisitante registro = new RegistroVisitante()
                 {
                     IdInstalacion = visitante.InstalacionId,
                     IdVisitante = visitante.VisitanteId,
-                    FechaIngreso = DateTime.ParseExact(visitante.FechaIngreso.ToString(), "yyyy-MM-dd HH:mm:ss", null)
-                  .ToString("dd-MM-yyyy HH:mm:ss"),
-                    Observaciones = visitante.Observaciones
+                    FechaIngreso = fecha.ToString("yyyy-MM-dd HH:mm:ss"),
+                    Observaciones = visitante.Observaciones,
+                    FechaSalida = "yyyy-MM-dd HH:mm:ss"
                 };
                 _repo.Registro(registro);
                 mensaje = "registro satisfactorio";
@@ -57,9 +59,46 @@ namespace Visitante.Business
             return mensaje;
         }
 
-        public List<RegistroVisitante> GetRegistros()
+        public List<ListRegistroVisitanteDTO> GetRegistros()
         {
-            return _repo.GetAll();
+            var listado = _repo.GetAll();
+            return retornarListadoDTO(listado);
+        }
+
+        public List<ListRegistroVisitanteDTO> GetRegistrosByNombreVisitante(string nombreVisitante)
+        {
+            var listado = _repo.GetAllByNombreVisitante(nombreVisitante);
+            return retornarListadoDTO(listado);
+        }
+
+        public List<ListRegistroVisitanteDTO> retornarListadoDTO(List<RegistroVisitante> registros)
+        {
+            return registros.Select(x => new ListRegistroVisitanteDTO
+            {
+
+                estadoRetirado = x.FechaSalidaData == null ? false : true,
+                fechaIngreso = DateTime.Parse(x.FechaIngreso),
+
+                Id = x.Id,
+                instalacion = new InstalacionDTO
+                {
+                    Nombre = x.Instalacion.Nombre
+                },
+                observaciones = x.Observaciones,
+                visitante = new VisitanteDTO
+                {
+                    Identificacion = x.Visitante.Identificacion,
+                    Nombres = x.Visitante.Nombres,
+                    Apellidos = x.Visitante.Apellidos,
+                    TipoIdentificacion = new TipoIdentificacionDTO
+                    {
+                        Nombre = x.Visitante.TipoIdentificacion1.Nombre,
+                        Siglas = x.Visitante.TipoIdentificacion1.Siglas
+                    }
+                },
+                fechaSalida = x.FechaSalida.Equals("yyyy-MM-dd HH:mm:ss") ?
+               new DateTime() : DateTime.Parse(x.FechaSalida)
+            }).ToList();
         }
     }
 }
